@@ -114,4 +114,5 @@ def update_bar(year_idx):
   }
 
 if __name__ == '__main__':
-  app.run_server(debug=True)
+  #app.run_server(debug=True)
+  app.run()
