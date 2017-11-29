@@ -7,7 +7,8 @@ from config import *
 from utils import *
 
 # Initializations & Data -------------------------------------------------------
-app = dash.Dash()
+app = dash.Dash(__name__)
+server = app.server
 # lookup tables
 LUT  = {}
 LUTA = {}
