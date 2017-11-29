@@ -22,7 +22,6 @@ repairs_equip = filter_obj_list_by_attr(repairs,'equipment',LUTA['equipment'],as
 
 # Layout -----------------------------------------------------------------------
 app.layout = html.Div([
-  html.Link(rel='icon',href='resources/ewh-logo.png'),
   html.H1(['EWH Repair Database']),
   html.Div([
       html.H3(['Repair Outcome']),
