@@ -1,11 +1,11 @@
 import os
 
 lut = {}
-lut['year']      = os.path.join('resources','year.csv')
-lut['fix']       = os.path.join('resources','fix.csv')
-lut['result']    = os.path.join('resources','result.csv')
-lut['country']   = os.path.join('resources','country.csv')
-lut['equipment'] = os.path.join('resources','equipment.csv')
+lut['year']      = os.path.join('static','year.csv')
+lut['fix']       = os.path.join('static','fix.csv')
+lut['result']    = os.path.join('static','result.csv')
+lut['country']   = os.path.join('static','country.csv')
+lut['equipment'] = os.path.join('static','equipment.csv')
 wsf = {}
 wsf['root']   = os.path.join('data')
 wsf['output'] = os.path.join('data','database.csv')

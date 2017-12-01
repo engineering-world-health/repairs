@@ -1,13 +1,16 @@
+import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
+from flask import send_from_directory
 from ewhdata import *
 from config import *
 from utils import *
 
 # Initializations & Data -------------------------------------------------------
 app = dash.Dash(__name__)
+app.css.append_css({'external_url':'static/custom.css'})
 server = app.server
 # lookup tables
 LUT  = {}
@@ -18,12 +21,17 @@ for (key,value) in lut.iteritems():
 # get all repair entries from forms
 forms = get_all_work_summary_forms(wsf['root'])
 repairs = get_attr_from_obj_list(forms,'repairs',merge=True)
-#repairs_year = filter_obj_list_by_attr(repairs,'year',LUTA['year'],asType=str)
-#repairs_equip = filter_obj_list_by_attr(repairs,'equipment',LUTA['equipment'],asType=str)
+
+# Misc Functions ---------------------------------------------------------------
+
+@app.server.route('/static/<path:path>')
+def static_file(path):
+    static_folder = os.path.join(os.getcwd(), 'static')
+    return send_from_directory(static_folder, path)
 
 # Layout Functions -------------------------------------------------------------
 
-def make_dropdown(lutName,dropdownID,width=200):
+def make_dropdown(lutName,dropdownID):
   return html.Div([
     html.Div([lutName.title()+':'],style={'padding':'10px 10px 5px 10px'}),
     dcc.Dropdown(
@@ -31,9 +39,9 @@ def make_dropdown(lutName,dropdownID,width=200):
       options=[{'label': [item], 'value': i} for (i,item) in enumerate(LUTA[lutName])],
       value=0)
     ],
-    style={'width':str(width)+'px',
-           'display':'inline-block',
-           'margin':'0px 0px 0px 0px'})
+    #style={'max-width':'100%','min-width':'50%'},
+    className='dropdown-container'
+  )
 
 def make_pie(labels,values):
   return {
@@ -42,9 +50,7 @@ def make_pie(labels,values):
       values=values
     )],
     'layout': go.Layout(
-      width=400,
-      height=300,
-      margin=go.Margin(l=50, r=50, b=50, t=50, pad=0)
+      width='100%'
     )
   }
 
@@ -62,33 +68,55 @@ def make_hbar(labels,values):
     )
   }
 
+def make_table_row(row,header=False):
+  if header:
+    cellfun = html.Th
+  else:
+    cellfun = html.Td
+  return [html.Tr([cellfun(h) for h in row])]
+
+
 # Layout -----------------------------------------------------------------------
 
 app.layout = html.Div([
-  html.H1(['EWH Repair Database']),
+  html.Div([
+    html.H1(['EWH Repair Database']),
+  ],className='h1-container'),
+  html.Div([
   html.Div([
       html.H3(['Repair Outcome']),
-      make_dropdown('year','select-year-pie-result',width=200),
-      make_dropdown('country','select-country-pie-result',width=200),
-      make_dropdown('equipment','select-equip-pie-result',width=400),
-      dcc.Graph(id='pie-result')
-    ], style={'width':'49%','display': 'inline-block'}
+      make_dropdown('year','select-year-pie-result'),
+      make_dropdown('country','select-country-pie-result'),
+      make_dropdown('equipment','select-equip-pie-result'),
+      dcc.Graph(id='pie-result',style={'display':'inline-block'})
+    ], className='panel-container'
   ),
   html.Div([
       html.H3(['Repair Type']),
-      make_dropdown('year','select-year-pie-fix',width=200),
-      make_dropdown('country','select-country-pie-fix',width=200),
-      make_dropdown('equipment','select-equip-pie-fix',width=400),
-      dcc.Graph(id='pie-fix')
-    ], style={'width':'49%','display': 'inline-block'}
-  ),
+      make_dropdown('year','select-year-pie-fix'),
+      make_dropdown('country','select-country-pie-fix'),
+      make_dropdown('equipment','select-equip-pie-fix'),
+      dcc.Graph(id='pie-fix',style={'display':'inline-block'})
+    ], className='panel-container'
+  )]),
+  html.Div([
   html.Div([
       html.H3(['Equipment Type']),
-      make_dropdown('year','select-year-bar-equipment',width=200),
-      make_dropdown('country','select-country-bar-equipment',width=200),
+      make_dropdown('year','select-year-bar-equipment'),
+      make_dropdown('country','select-country-bar-equipment'),
       dcc.Graph(id='bar-equipment')
-    ], style={'width':'98%','display': 'inline-block'}
-  ),
+    ], className='panel-container'
+  )]),
+  html.Div([
+  html.Div([
+    html.H3(['Repair Notes']),
+    make_dropdown('year','select-year-notes'),
+    make_dropdown('country','select-country-notes'),
+    make_dropdown('equipment','select-equip-notes'),
+    html.Table(id='repair-notes',
+               style={'display':'inline-block','margin':'10px 0px 10px 0px'})
+  ], className='panel-container'
+  )])
 ], style={'width':'80%','margin':'0% 8% 8% 8%'}
 )
 
@@ -136,6 +164,24 @@ def update_bar(year_idx,country_idx):
     equipment_nonzero = []
     bar_year_nonzero = []
   return make_hbar(equipment_nonzero,bar_year_nonzero)
+
+@app.callback(
+  dash.dependencies.Output('repair-notes','children'),
+ [dash.dependencies.Input('select-year-notes','value'),
+  dash.dependencies.Input('select-country-notes','value'),
+  dash.dependencies.Input('select-equip-notes','value')])
+def update_notes(year_idx,country_idx,equip_idx):
+  filters = {'year':     LUTA['year'][year_idx],
+             'country':  LUTA['country'][country_idx],
+             'equipment':LUTA['equipment'][equip_idx]}
+  repairs_filtered = filter_obj_list_multi(repairs,filters,asType=str)
+  equips = get_attr_from_obj_list(repairs_filtered,'equipment')
+  models = get_attr_from_obj_list(repairs_filtered,'model')
+  notes  = get_attr_from_obj_list(repairs_filtered,'notes')
+  table = make_table_row(['Equipment','Model','Notes'],header=True)
+  for equip,model,note in zip(equips,models,notes):
+    table += make_table_row([equip,model,note])
+  return table
 
 if __name__ == '__main__':
   app.run_server(debug=True)
