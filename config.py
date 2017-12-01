@@ -4,6 +4,7 @@ lut = {}
 lut['year']      = os.path.join('resources','year.csv')
 lut['fix']       = os.path.join('resources','fix.csv')
 lut['result']    = os.path.join('resources','result.csv')
+lut['country']   = os.path.join('resources','country.csv')
 lut['equipment'] = os.path.join('resources','equipment.csv')
 wsf = {}
 wsf['root']   = os.path.join('data')

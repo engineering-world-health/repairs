@@ -1,3 +1,5 @@
+import dash_core_components as dcc
+import dash_html_components as html
 import csv
 
 def get_attr_from_obj_list(objList,attrName,merge=False):
@@ -23,6 +25,11 @@ def filter_obj_list_by_attr(objList,attrName,attrValues,asType=None):
           objAttrList.append(obj)
     objFilterList.append(objAttrList)
   return objFilterList
+
+def filter_obj_list_multi(objList,attrDict,asType=str):
+  for attrName,attrValue in attrDict.iteritems():
+    objList = filter_obj_list_by_attr(objList,attrName,[attrValue],asType=asType)[0]
+  return objList
 
 def count_obj_list_by_attr(objList,attrName,attrValues,asType=None):
   if asType is None:
