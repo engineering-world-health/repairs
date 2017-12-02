@@ -6,6 +6,7 @@ lut['fix']       = os.path.join('static','fix.csv')
 lut['result']    = os.path.join('static','result.csv')
 lut['country']   = os.path.join('static','country.csv')
 lut['equipment'] = os.path.join('static','equipment.csv')
+lut['table']     = os.path.join('static','table.csv')
 wsf = {}
 wsf['root']   = os.path.join('data')
 wsf['output'] = os.path.join('data','database.csv')

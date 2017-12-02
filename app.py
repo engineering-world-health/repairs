@@ -3,7 +3,9 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
+from dash.dependencies import Input, Output
 from flask import send_from_directory
+from collections import OrderedDict
 from ewhdata import *
 from config import *
 from utils import *
@@ -39,7 +41,6 @@ def make_dropdown(lutName,dropdownID):
       options=[{'label': [item], 'value': i} for (i,item) in enumerate(LUTA[lutName])],
       value=0)
     ],
-    #style={'max-width':'100%','min-width':'50%'},
     className='dropdown-container'
   )
 
@@ -47,10 +48,14 @@ def make_pie(labels,values):
   return {
     'data': [go.Pie(
       labels=labels,
-      values=values
+      values=values,
+      hole=0.4,
+      sort=False,
     )],
     'layout': go.Layout(
-      width='100%'
+      margin={'l': 0, 'b': 120, 't': 0, 'r': 0, 'pad': 0},
+      legend={'orientation':'h'},
+      autosize=True
     )
   }
 
@@ -62,7 +67,6 @@ def make_hbar(labels,values):
       orientation='h'
     )],
     'layout': go.Layout(
-      width=800,
       height=100+20*len(labels),
       margin=go.Margin(l=200, r=50, b=50, t=50, pad=0)
     )
@@ -75,58 +79,60 @@ def make_table_row(row,header=False):
     cellfun = html.Td
   return [html.Tr([cellfun(h) for h in row])]
 
-
 # Layout -----------------------------------------------------------------------
 
 app.layout = html.Div([
   html.Div([
-    html.H1(['EWH Repair Database']),
-  ],className='h1-container'),
+    html.Div([
+      html.H1(['EWH Repair Database']),
+    ],className='panel-inner')
+  ],className='panel-outer full-width'),
   html.Div([
+    html.Div([
+      make_dropdown('year','select-year'),
+      make_dropdown('country','select-country'),
+      make_dropdown('equipment','select-equipment'),
+    ],className='panel-inner')
+  ],className='panel-outer full-width'),
   html.Div([
-      html.H3(['Repair Outcome']),
-      make_dropdown('year','select-year-pie-result'),
-      make_dropdown('country','select-country-pie-result'),
-      make_dropdown('equipment','select-equip-pie-result'),
-      dcc.Graph(id='pie-result',style={'display':'inline-block'})
-    ], className='panel-container'
-  ),
+    html.Div([
+      html.H3(['Repair Result']),
+      dcc.Graph(id='pie-result',style={'display':'inline-block','width':'100%'})
+    ],className='panel-inner')
+  ],className='panel-outer half-width'),
   html.Div([
+    html.Div([
       html.H3(['Repair Type']),
-      make_dropdown('year','select-year-pie-fix'),
-      make_dropdown('country','select-country-pie-fix'),
-      make_dropdown('equipment','select-equip-pie-fix'),
-      dcc.Graph(id='pie-fix',style={'display':'inline-block'})
-    ], className='panel-container'
-  )]),
+      dcc.Graph(id='pie-fix',style={'display':'inline-block','width':'100%'})
+    ],className='panel-inner')
+  ],className='panel-outer half-width'),
   html.Div([
-  html.Div([
+    html.Div([
       html.H3(['Equipment Type']),
-      make_dropdown('year','select-year-bar-equipment'),
-      make_dropdown('country','select-country-bar-equipment'),
       dcc.Graph(id='bar-equipment')
-    ], className='panel-container'
-  )]),
+    ],className='panel-inner')
+  ],className='panel-outer full-width'),
   html.Div([
-  html.Div([
-    html.H3(['Repair Notes']),
-    make_dropdown('year','select-year-notes'),
-    make_dropdown('country','select-country-notes'),
-    make_dropdown('equipment','select-equip-notes'),
-    html.Table(id='repair-notes',
+    html.Div([
+      html.H3(['Repair Notes']),
+      dcc.Checklist(id='table-toggles',
+        options=[{'label':label,'value':value,'class':'test'} \
+                 for label,value in LUT['table']],
+        values=['equipment','model','notes']),
+      html.Table(id='repair-table',
                style={'display':'inline-block','margin':'10px 0px 10px 0px'})
-  ], className='panel-container'
-  )])
+    ],className='panel-inner')
+  ],className='panel-outer full-width'),
 ], style={'width':'80%','margin':'0% 8% 8% 8%'}
 )
 
 # Callback Functions -----------------------------------------------------------
 
 @app.callback(
-  dash.dependencies.Output('pie-result','figure'),
- [dash.dependencies.Input('select-year-pie-result','value'),
-  dash.dependencies.Input('select-country-pie-result','value'),
-  dash.dependencies.Input('select-equip-pie-result','value')])
+  Output('pie-result','figure'),
+ [Input('select-year','value'),
+  Input('select-country','value'),
+  Input('select-equipment','value')])
 def update_pie_result(year_idx,country_idx,equip_idx):
   filters = {'year':     LUTA['year'][year_idx],
              'country':  LUTA['country'][country_idx],
@@ -136,10 +142,10 @@ def update_pie_result(year_idx,country_idx,equip_idx):
   return make_pie(LUT['result'],results)
 
 @app.callback(
-  dash.dependencies.Output('pie-fix','figure'),
- [dash.dependencies.Input('select-year-pie-fix','value'),
-  dash.dependencies.Input('select-country-pie-fix','value'),
-  dash.dependencies.Input('select-equip-pie-fix','value')])
+  Output('pie-fix','figure'),
+ [Input('select-year','value'),
+  Input('select-country','value'),
+  Input('select-equipment','value')])
 def update_pie_fix(year_idx,country_idx,equip_idx):
   filters = {'year':     LUTA['year'][year_idx],
              'country':  LUTA['country'][country_idx],
@@ -149,12 +155,14 @@ def update_pie_fix(year_idx,country_idx,equip_idx):
   return make_pie(LUT['fix'],results)
 
 @app.callback(
-  dash.dependencies.Output('bar-equipment','figure'),
- [dash.dependencies.Input('select-year-bar-equipment','value'),
-  dash.dependencies.Input('select-country-bar-equipment','value')])
-def update_bar(year_idx,country_idx):
-  filters = {'year':   LUTA['year'][year_idx],
-             'country':LUTA['country'][country_idx]}
+  Output('bar-equipment','figure'),
+ [Input('select-year','value'),
+  Input('select-country','value'),
+  Input('select-equipment','value')])
+def update_bar(year_idx,country_idx,equip_idx):
+  filters = {'year':     LUTA['year'][year_idx],
+             'country':  LUTA['country'][country_idx],
+             'equipment':LUTA['equipment'][equip_idx]}
   repairs_filtered = filter_obj_list_multi(repairs,filters,asType=str)
   if repairs_filtered:
     bar_year = count_obj_list_by_attr(repairs_filtered,'equipment',LUT['equipment'])
@@ -166,21 +174,24 @@ def update_bar(year_idx,country_idx):
   return make_hbar(equipment_nonzero,bar_year_nonzero)
 
 @app.callback(
-  dash.dependencies.Output('repair-notes','children'),
- [dash.dependencies.Input('select-year-notes','value'),
-  dash.dependencies.Input('select-country-notes','value'),
-  dash.dependencies.Input('select-equip-notes','value')])
-def update_notes(year_idx,country_idx,equip_idx):
+  Output('repair-table','children'),
+ [Input('select-year','value'),
+  Input('select-country','value'),
+  Input('select-equipment','value'),
+  Input('table-toggles','values')])
+def update_notes(year_idx,country_idx,equip_idx,table_cols):
+  # print table_cols
   filters = {'year':     LUTA['year'][year_idx],
              'country':  LUTA['country'][country_idx],
              'equipment':LUTA['equipment'][equip_idx]}
   repairs_filtered = filter_obj_list_multi(repairs,filters,asType=str)
-  equips = get_attr_from_obj_list(repairs_filtered,'equipment')
-  models = get_attr_from_obj_list(repairs_filtered,'model')
-  notes  = get_attr_from_obj_list(repairs_filtered,'notes')
-  table = make_table_row(['Equipment','Model','Notes'],header=True)
-  for equip,model,note in zip(equips,models,notes):
-    table += make_table_row([equip,model,note])
+  tablecols = OrderedDict([row for row in LUT['table'] if row[1] in table_cols])
+  table     = make_table_row(tablecols.keys(),header=True)
+  colData   = OrderedDict()
+  for colAttr in tablecols.values():
+    colData[colAttr] = get_attr_from_obj_list(repairs_filtered,colAttr)
+  for rowData in zip(*colData.itervalues()):
+    table += make_table_row(list(rowData))
   return table
 
 if __name__ == '__main__':

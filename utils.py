@@ -47,8 +47,14 @@ def count_obj_list_by_attr(objList,attrName,attrValues,asType=None):
   return count
 
 def csv_LUT(lutname):
+  lut = []
   with open(lutname,'r') as csvfile:
-    return [row[0] for row in csv.reader(csvfile)]
+    for row in csv.reader(csvfile):
+      if len(row) == 1:
+        lut += row
+      else:
+        lut.append(row)
+    return lut
 
 def print_obj(obj,sub=False):
   def xstr(s):
