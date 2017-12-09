@@ -27,6 +27,9 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: #FFFFFF;
 }
+.output {
+  color: #999999;
+}
 .dropdown-container {
   margin: 0px 2px 0px 2px;
   min-width: 200px;
