@@ -277,6 +277,14 @@ app.layout = html.Div([
   html.Div([
     html.Div([
       html.H1(['EWH Repair Database']),
+      html.Div([
+        html.A('Engineering World Health',href='http://www.ewh.org',target='_blank'),
+        ' is a global organization which supports medical technology in the developing world. ',
+        'Every year, as part of the EWH Summer Institute, students from around the world travel to low-resource countries to work alongside local technicians repairing medical equipment. ',
+        'Each repair is logged and classified to help understand common challenges in these contexts.',
+        html.Br(),html.Br(),
+        'Below is an interactive summary of the repairs from two sample countries. The complete database will be available soon.'
+      ]),
     ],className='panel-inner')
   ],className='panel-outer full-width'),
   html.Div([

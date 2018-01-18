@@ -1,9 +1,16 @@
 body {
   background-color: #EEEEEE;
 }
-body, p, a {
+body, p {
   color: #555555;
   font-family: 'PT Sans', sans-serif;
+}
+a,a:visited {
+  text-decoration: none;
+  color: #2475b1;
+}
+a:hover {
+  color: #2B8BD4;
 }
 table {
   min-width: 100%;
