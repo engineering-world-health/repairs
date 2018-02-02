@@ -1,6 +1,5 @@
 *.pyc
 .env
 old/*
-data/*
 data-dummy/*
 data-other/*
