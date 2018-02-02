@@ -1,7 +1,10 @@
 import os
 import re
+import sys
 import csv
 import xlrd
+import shutil
+import traceback
 import dateparser
 
 import dash
@@ -14,6 +17,7 @@ from collections import OrderedDict
 
 # Config -----------------------------------------------------------------------
 
+verbose = True
 lut = {}
 lut['year']      = os.path.join('static','list-year.csv')
 lut['fix']       = os.path.join('static','list-fix.csv')
@@ -71,12 +75,15 @@ class ExcelFile:
     idxs = [match for match in re.compile('(\D+?)(\d+)').findall(idxStr)]
     return reduceList([(int(r)-1,ord(c.upper())-65) for (c,r) in [idx for idx in idxs]])
 
-  def date(self,rawDate,datemode=0):
-    try:
-      date = xlrd.xldate.xldate_as_datetime(rawDate,datemode)
-    except:
-      date = dateparser.parse(rawDate)
-    return date
+  def date(self,rawDate,datemode=0,defaultyear=''):
+    if rawDate:
+      try:
+        date = xlrd.xldate.xldate_as_datetime(rawDate,datemode)
+      except:
+        date = dateparser.parse(rawDate)
+      return date
+    else:
+      return dateparser.parse(defaultyear)
 
 class WorkSummaryForm(ExcelFile):
 
@@ -96,10 +103,11 @@ class WorkSummaryForm(ExcelFile):
   def load_meta(self):
     get = self.open().cell_value
     return {
-      'year'     : str(self.date(get(*self.row_col(idx['date']))).year),
-      'country'  : str(          get(*self.row_col(idx['country']))),
-      'engineers': str(          get(*self.row_col(idx['engineers']))),
-      'hospital' : str(          get(*self.row_col(idx['hospital'])))
+      'country'  : string(get(*self.row_col(idx['country']))),
+      'engineers': string(get(*self.row_col(idx['engineers']))),
+      'hospital' : string(get(*self.row_col(idx['hospital']))),
+      'year'     : string(self.date('',defaultyear=self.defaultyear()).year)
+      #'year'     : string(self.date(get(*self.row_col(idx['date']))))
     }
 
   def load_repairs(self):
@@ -109,11 +117,11 @@ class WorkSummaryForm(ExcelFile):
     for row in range(self.row(idx['repair']['row0']),sheet.nrows):
       if get(row,self.col(idx['repair']['equip'])):
         repairs.append(dict({
-          'equipment': str(get(row,self.col(idx['repair']['equip']))),
-          'oem'      : str(get(row,self.col(idx['repair']['oem']))),
-          'model'    : str(get(row,self.col(idx['repair']['model']))),
-          'sn'       : str(get(row,self.col(idx['repair']['sn']))),
-          'notes'    : str(get(row,self.col(idx['repair']['notes']))),
+          'equipment': string(get(row,self.col(idx['repair']['equip']))),
+          'oem'      : string(get(row,self.col(idx['repair']['oem']))),
+          'model'    : string(get(row,self.col(idx['repair']['model']))),
+          'sn'       : string(get(row,self.col(idx['repair']['sn']))),
+          'notes'    : string(get(row,self.col(idx['repair']['notes']))),
           'fix'      : self.switch_to_str(
                          [get(row,self.col(c)) for c in idx['repair']['fix']],
                          self.lut['fix']),
@@ -130,6 +138,16 @@ class WorkSummaryForm(ExcelFile):
       return res[0]
     else:
       return None
+
+  def defaultyear(self):
+    yr = str(int(re.compile('/(.*) Work Summary Forms/').findall(self.filename)[0]))
+    return yr
+
+def string(s):
+  try:
+    return str(s).encode('utf-8')
+  except:
+    return s.encode('utf-8')
 
 def csv_to_list(lutname):
   lut = []
@@ -159,10 +177,23 @@ def make_luts():
 
 def parse_all_work_summary_forms(root,outFile):
   repairs = []
+  i = 0
   for (paths,dirs,files) in os.walk(root):
     for f in files:
-      form = WorkSummaryForm(os.path.join(paths,f))
-      repairs += form.repairs
+      filename = os.path.join(paths,f)
+      if verbose:
+        i += 1
+        print('> ['+str(i).zfill(3)+']: '+filename)
+      # form = WorkSummaryForm(filename)
+      # repairs += form.repairs
+      try:
+        form = WorkSummaryForm(filename)
+        repairs += form.repairs
+      except Exception as e:
+        print('\033[F> [ ! ]: ')
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        traceback.print_tb(exc_tb)
+
   with open(outFile,'w') as csvOutFile:
     writer = csv.writer(csvOutFile)
     writer.writerow(repairs[0].keys())
@@ -198,7 +229,7 @@ def remove_zeros(values,labels):
     return [],[]
 
 # Initializations & Data -------------------------------------------------------
-#parse_all_work_summary_forms(wsf['root'],wsf['output']) # need only once
+parse_all_work_summary_forms(wsf['root'],wsf['output']) # need only once
 app = dash.Dash(__name__)
 app.css.append_css({'external_url':'static/custom.css'})
 server = app.server
@@ -283,7 +314,7 @@ app.layout = html.Div([
         'Every year, as part of the EWH Summer Institute, students from around the world travel to low-resource countries to work alongside local technicians repairing medical equipment. ',
         'Each repair is logged and classified to help understand common challenges in these contexts.',
         html.Br(),html.Br(),
-        'Below is an interactive summary of the repairs from two sample countries. The complete database will be available soon.'
+        'Below is an interactive summary of the repairs from Nicaragua, Rwanda, and Tanzania, from 2011 to 2015.'
       ]),
     ],className='panel-inner')
   ],className='panel-outer full-width'),
