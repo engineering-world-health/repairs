@@ -12,7 +12,7 @@ from mysql.connector import connection
 
 verbose = False
 pdir = os.path.dirname(__file__)
-wsf  = os.path.join(pdir,'data')
+wsf  = os.path.join(pdir,'..','data')
 lut = json.load(open(os.path.join(pdir,'meta.json')),object_pairs_hook=odict)
 idx = json.load(open(os.path.join(pdir,'idx.json')),object_pairs_hook=odict)
 sql = json.load(open(os.path.join(pdir,'sql.json')),object_pairs_hook=odict)

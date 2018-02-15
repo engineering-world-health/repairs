@@ -19,6 +19,6 @@
     "sn":        "CHAR(60)",
     "fix":       "CHAR(30)",
     "result":    "CHAR(20)",
-    "notes":     "VARCHAR(360)"
+    "notes":     "VARCHAR(512)"
   }
 }
