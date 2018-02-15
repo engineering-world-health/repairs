@@ -18,8 +18,9 @@ The latest build is available here: https://ewh-repairs.herokuapp.com/
 
 ### Dependencies
 
-This project uses python (2.7) with
-- [plotly dash](https://plot.ly/dash/) for creating interactive graphs in a web app
+This project uses:
+- [python (2.7)](https://www.python.org/download/releases/2.7/) for scraping the raw files and uploading to SQL
+- [d3.js](https://d3js.org/) for creating interactive graphs
 - [heroku](https://herokuapp.com) for hosting the app
 
 ### Editing & Rebuilding the App
