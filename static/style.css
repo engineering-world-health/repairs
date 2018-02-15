@@ -1,0 +1,107 @@
+body {
+  background-color: #DDDDDD;
+  width: 90%;
+  margin: 0% 4% 4%;
+  flex: 1;
+  min-width: 480px;
+}
+body, p, .select {
+  color: #555555;
+  font-family: 'PT Sans', sans-serif;
+}
+a,a:visited {
+  text-decoration: none;
+  color: #2475b1;
+}
+a:hover {
+  color: #2B8BD4;
+}
+h5 {
+  margin-bottom: 0.5em;
+}
+select, .checkwrap {
+  display: inline-flex;
+  background: #ffffff;
+  font-size: inherit;
+  color: inherit;
+  padding: 2px;
+  margin: 5px;
+  width: 200px;
+}
+legi {
+  padding: 0 0 0 1em;
+  margin: 2px;
+  display: block;
+}
+legl {
+  display: block;
+  padding: 0 0 0 5px;
+  background: #ffffff;
+}
+table {
+  position: relative;
+  width: 100%;
+}
+th {
+  text-align: left;
+  color: #FFFFFF;
+  background-color: #110A2A;
+  padding: 5px;
+}
+td {
+  text-align: left;
+  color: #555555;
+  padding: 5px;
+  word-break: break-word;
+}
+tr:nth-child(odd) {
+  background-color: #EBE5FF;
+}
+tr:nth-child(even) {
+  background-color: #FFFFFF;
+}
+.dropdown-container {
+  margin: 0px 2px 0px 2px;
+  min-width: 200px;
+  display: inline-block;
+}
+.panel-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.panel-outer {
+  height: auto;
+  vertical-align: top;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+}
+.panel-inner {
+  height: auto;
+  background-color: #FFFFFF;
+  flex: 1;
+  padding: 20px;
+  margin: 3px;
+}
+.half-width {
+  width: 50%;
+}
+.full-width {
+  width: 100%;
+}
+.grid line {
+
+  stroke: #cccccc;
+}
+.tick text {
+  fill: #555555;
+}
+#spinner {
+  position: relative;
+  height: 80px;
+}
+#checkbox-table {
+  margin-bottom: 20px;
+}

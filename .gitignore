@@ -1,5 +1,2 @@
-*.pyc
-.env
-old/*
-data-dummy/*
-data-other/*
+database.csv
+ignore/*
