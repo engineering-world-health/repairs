@@ -16,17 +16,23 @@ a,a:visited {
 a:hover {
   color: #2B8BD4;
 }
-h5 {
+h4 {
   margin-bottom: 0.5em;
+}
+select {
+  background-color: #FFFFFF;
+  border-color: #DDDDDD;
 }
 select, .checkwrap {
   display: inline-flex;
-  background: #ffffff;
   font-size: inherit;
   color: inherit;
   padding: 2px;
-  margin: 5px;
+  margin: 5px 0px;
   width: 200px;
+}
+.checkwrap>span {
+  margin-left: 5px;
 }
 legi {
   padding: 0 0 0 1em;
@@ -61,27 +67,22 @@ tr:nth-child(even) {
   background-color: #FFFFFF;
 }
 .dropdown-container {
-  margin: 0px 2px 0px 2px;
-  min-width: 200px;
+  margin: 0px 5px;
+  /* min-width: 200px; */
   display: inline-block;
 }
-.panel-row {
-  display: flex;
-  flex-wrap: nowrap;
-}
-.panel-outer {
-  height: auto;
-  vertical-align: top;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
+.row {
   padding: 0px;
   margin: 0px;
 }
-.panel-inner {
+[class*='col-'] {
+  vertical-align: top;
+  padding: 0px;
+  margin: 0px;
+}
+.panel {
   height: auto;
   background-color: #FFFFFF;
-  flex: 1;
   padding: 20px;
   margin: 3px;
 }
@@ -104,4 +105,15 @@ tr:nth-child(even) {
 }
 #checkbox-table {
   margin-bottom: 20px;
+}
+#num-matches {
+  display: block;
+  height: 34px;
+  width: 34px;
+  line-height: 34px;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #110A2A;
+  color: white;
+  text-align: center;
 }

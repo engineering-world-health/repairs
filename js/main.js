@@ -15,7 +15,7 @@ function gen_checkbox(parent,data){
 }
 
 function gen_piechart(parent,names,values){
-  parent.style('height','100%').style('max-width','400px')
+  parent.style('height','100%').style('max-width','300px')
   var r = 100;
   var svg  = parent.append('svg').attr('width','100%')
     .attr('viewBox','0 0 '+r*2+' '+(r*2))
@@ -145,9 +145,10 @@ function render(repairsjson){
   // init
   loading(false)
   get_checkboxes()
+  for (d in div){ div[d].html(''); };
   // filter repairs
   filtered = filter_repairs(repairsjson);
-  for (d in div){ div[d].html(''); };
+  d3.select('#num-matches').html(filtered.length)
   // table
   tcols = meta['table'].filter((t)=>{return t.checked;})
   rcols = get_cols(get_col('col',tcols),filtered)
