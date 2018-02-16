@@ -46,7 +46,7 @@
           </div>
           <div class='dropdown-container'>
             <h4>Matching Repairs:</h4>
-            <span id='num-matches'></span>
+            <span id='num-matches'>0</span>
           </div>
         </div>
       </div></div>
