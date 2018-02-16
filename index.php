@@ -87,6 +87,6 @@
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script>
 <script src='js/main.js'></script>
-<script src='js/icheck.min.js'></script>
+<script src='js/jquery.tablesorter.min.js'></script>
 </script>
 </html>

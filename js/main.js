@@ -59,7 +59,7 @@ function gen_bar(parent,names,values){
 
 function gen_table(parent,cols,data){
   parent.style('height','100%').style('display','table')
-  var table = parent.append('table')
+  var table = parent.append('table').attr('class','tablesorter');
   var thead = table.append('thead');
   var tbody = table.append('tbody');
   thead.append('tr').selectAll('th').data(cols.map(x => x.name)).enter()
@@ -67,6 +67,7 @@ function gen_table(parent,cols,data){
   tbody.selectAll('tr').data(data).enter()
     .append('tr').selectAll('td').data(function(r){return d3.values(r);}).enter()
     .append('td').text(function(d) {return d;});
+  $(document).ready(function(){$(".tablesorter").tablesorter()});
 }
 
 function get_checkboxes(){
