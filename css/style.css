@@ -1,27 +1,37 @@
 body {
-  background-color: #DDDDDD;
+  --color-text: #555555;
+  --color-dark-1: #110A2A;
+  --color-dark-2: #460159;
+  --color-link: #2475b1;
+  --color-link-hover: #2475b1;
+  --color-bg: #DDDDDD;
+  --color-panel: #FFFFFF;
+  --color-tr: #EBE5FF;
+}
+body {
+  background-color: var(--color-bg);
   width: 90%;
   margin: 0% 4% 4%;
   flex: 1;
   min-width: 480px;
 }
 body, p, .select {
-  color: #555555;
+  color: var(--color-text);
   font-family: 'PT Sans', sans-serif;
 }
 a,a:visited {
   text-decoration: none;
-  color: #2475b1;
+  color: var(--color-link);
 }
 a:hover {
-  color: #2B8BD4;
+  color: var(--color-link-hover);
 }
 h4 {
   margin-bottom: 0.5em;
 }
 select {
-  background-color: #FFFFFF;
-  border-color: #DDDDDD;
+  background-color: var(--color-panel);
+  border-color: var(--color-bg);
 }
 select, .checkwrap {
   display: inline-flex;
@@ -42,7 +52,7 @@ legi {
 legl {
   display: block;
   padding: 0 0 0 5px;
-  background: #ffffff;
+  background: var(--color-panel);
 }
 table {
   position: relative;
@@ -61,7 +71,7 @@ table.tablesorter thead tr .header {
   cursor: pointer;
 }
 table.tablesorter thead tr .header:hover {
-  background-color: #460159;
+  background-color: var(--color-dark-2);
 }
 table.tablesorter thead tr .headerSortUp {
   background-image: url(up.png);
@@ -77,21 +87,21 @@ th.headerSortDown {
 }
 th {
   text-align: left;
-  color: #FFFFFF;
-  background-color: #110A2A;
+  color: var(--color-panel);
+  background-color: var(--color-dark-1);
   padding: 5px;
 }
 td {
   text-align: left;
-  color: #555555;
+  color: var(--color-text);
   padding: 5px;
   word-break: break-word;
 }
 tr:nth-child(odd) {
-  background-color: #EBE5FF;
+  background-color: var(--color-tr);
 }
 tr:nth-child(even) {
-  background-color: #FFFFFF;
+  background-color: var(--color-panel);
 }
 .dropdown-container {
   margin: 0px 5px;
@@ -109,7 +119,7 @@ tr:nth-child(even) {
 }
 .panel {
   height: auto;
-  background-color: #FFFFFF;
+  background-color: var(--color-panel);
   padding: 20px;
   margin: 3px;
 }
@@ -120,11 +130,10 @@ tr:nth-child(even) {
   width: 100%;
 }
 .grid line {
-
-  stroke: #cccccc;
+  stroke: var(--color-bg);
 }
 .tick text {
-  fill: #555555;
+  fill: var(--color-text);
 }
 #spinner {
   position: relative;
@@ -140,7 +149,7 @@ tr:nth-child(even) {
   line-height: 34px;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  background-color: #110A2A;
+  background-color: var(--color-dark-1);
   color: white;
   text-align: center;
 }
