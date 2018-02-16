@@ -15,7 +15,7 @@ function gen_checkbox(parent,data){
 }
 
 function gen_piechart(parent,names,values){
-  parent.style('height','100%').style('max-width','300px')
+  parent.style('height','100%').style('max-width','300px').style('margin','0 auto');
   var r = 100;
   var svg  = parent.append('svg').attr('width','100%')
     .attr('viewBox','0 0 '+r*2+' '+(r*2))
@@ -34,7 +34,7 @@ function gen_piechart(parent,names,values){
     .append('legl').text(function(d){return d;})
 }
 
-function gen_bar(parent,names,values){
+function gen_barchart(parent,names,values){
   dy = 10;
   gy = 2;
   ox = 180;
@@ -157,7 +157,7 @@ function render(repairsjson){
   // bar chart
   if (select['equipment'].node().value == all) {
     div['equipment'].style('display','block')
-    gen_bar(div['equipment'],meta['equipment'],count_match(meta['equipment'],filtered.map(f => f.equipment)));
+    gen_barchart(div['equipment'],meta['equipment'],count_match(meta['equipment'],filtered.map(f => f.equipment)));
   } else {
     div['equipment'].style('display','none');
   }
