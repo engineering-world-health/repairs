@@ -113,9 +113,11 @@ tr:nth-child(even) {
   background-color: var(--color-pane);
 }
 .row {
-  display: flex;
   padding: 0px;
   margin: 0px;
+}
+#render>.row {
+  display: flex;
 }
 [class*='col-'] {
   padding: 0px;
@@ -126,6 +128,8 @@ tr:nth-child(even) {
   padding: 20px;
   border: 5px solid var(--color-bg);
   height: auto;
+}
+.col-12 {
   width: 100%;
 }
 .grid line {

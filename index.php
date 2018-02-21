@@ -32,19 +32,19 @@
     <div class='row' style='display:block'>
       <div class='pane col-12'>
         <div class='row' id='filters'>
-          <div class='ui-container col-xs-6 col-md-3 col-lg-3'>
+          <div class='ui-container col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Year</h4>
             <select class=dropdown id='select-year'></select>
           </div>
-          <div class='ui-container col-xs-6 col-md-3 col-lg-3'>
+          <div class='ui-container col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Country</h4>
             <select class=dropdown id='select-country'></select>
           </div>
-          <div class='ui-container col-xs-6 col-md-3 col-lg-3'>
+          <div class='ui-container col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Equipment Type</h4>
             <select class=dropdown id='select-equipment'></select>
           </div>
-          <div class='ui-container col-xs-6 col-md-3 col-lg-3'>
+          <div class='ui-container col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Matching Repairs:</h4>
             <span id='num-matches'>0</span><!--
          --><a id='download'>Download CSV</a>
@@ -59,11 +59,11 @@
     </div>
     <div id='render' style='display: none'>
       <div class='row'>
-        <div class='pane col-sm-6'>
+        <div class='pane col-sx-12 col-sm-6'>
           <h2>Repair Result</h2>
           <div id='repair-result'></div>
         </div>
-        <div class='pane col-sm-6'>
+        <div class='pane col-sx-12 col-sm-6'>
           <h2>Repair Type</h2>
           <div id='repair-fix'></div>
         </div>
