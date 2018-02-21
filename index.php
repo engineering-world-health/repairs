@@ -24,8 +24,9 @@
         Each repair is logged and classified to help understand common challenges in these contexts.
         <br><br>
         Below is an interactive summary of the repairs from
-        Nicaragua, Rwanda, and Tanzania,
-        from 2011 to 2015.
+        several countries over the past few years.
+        Source code can be found on
+        <a href='https://github.com/jessexknight/ewh-repairs' target='_blank'>Github</a>.
         </par>
       </div>
     </div>
