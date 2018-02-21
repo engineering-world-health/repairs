@@ -8,10 +8,11 @@ function gen_dropdown(select,id,list){
 }
 
 function gen_checkbox(parent,data){
-  var wrap = parent.append('div').attr('float','left').attr('class','ui-container');
-  wrap.append('input').attr('type','checkbox')
+  var wrap = parent.append('div').attr('float','left')
+    .attr('class','col-xs-6 col-sm-3 col-md-2');
+  wrap.append('input').attr('type','checkbox').attr('class','checkbox')
     .attr('id','checkbox-'+data['col']).property('checked',Boolean(data['checked']));
-  wrap.append('span').html(data['name']);
+  wrap.append('label').attr('for','checkbox-'+data['col']).html(data['name']);
 }
 
 function gen_piechart(parent,names,values){
@@ -122,10 +123,6 @@ function gen_download(repairs){
   repairs.forEach(function(r){
     csv += gen_csv_line(Object.values(r))
   });
-  // rows.forEach(function(rowArray){
-  //    let row = rowArray.join(",");
-  //    csvContent += row + "\r\n";
-  // });
   return encodeURI(csv);
 }
 
@@ -172,7 +169,7 @@ function render(repairsjson){
   filtered = filter_repairs(repairsjson);
   d3.select('#num-matches').html(filtered.length)
   // download button
-  d3.select('#download').attr('download','repairs.csv',).attr('href',gen_download(filtered))
+  d3.select('#download').attr('download','ewh-repairs.csv',).attr('href',gen_download(filtered))
   // table
   tcols = meta['table'].filter((t)=>{return t.checked;})
   rcols = get_cols(get_col('col',tcols),filtered)

@@ -17,7 +17,7 @@ body {
 body {
   background-color: var(--color-bg);
   width: 90%;
-  margin: 0% 4% 4%;
+  margin: 4%;
   flex: 1;
   min-width: 480px;
 }
@@ -49,9 +49,6 @@ select {
 option {
   background-color: var(--color-pane);
   color: var(--color-text);
-}
-.ui-container>span {
-  margin-left: 5px;
 }
 legi {
   padding: 0 0 0 1em;
@@ -131,6 +128,39 @@ tr:nth-child(even) {
 }
 .col-12 {
   width: 100%;
+}
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2em;
+  cursor: pointer;
+}
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;       top: 0;
+  width: 1.5em;  height: 1.5em;
+  background-color: var(--color-dark-1);
+}
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '';
+  position: absolute;
+  left: .25em;  top: .25em;
+  width: 1em;   height: 1em;
+  background-color: var(--color-link-hover);
+}
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  }
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
 }
 .grid line {
   stroke: var(--color-bg);
