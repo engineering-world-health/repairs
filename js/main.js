@@ -108,6 +108,27 @@ function filter_repairs(repairs){
   return filtered;
 }
 
+function gen_csv_line(list){
+  let delim = ","
+  let wrap  = "\""
+  let eol   = "\r\n"
+  return wrap+list.join(wrap+delim+wrap)+wrap+eol
+}
+
+function gen_download(repairs){
+
+  let csv = "data:text/csv;charset=utf-8,";
+  csv += gen_csv_line(Object.keys(repairs[0]))
+  repairs.forEach(function(r){
+    csv += gen_csv_line(Object.values(r))
+  });
+  // rows.forEach(function(rowArray){
+  //    let row = rowArray.join(",");
+  //    csvContent += row + "\r\n";
+  // });
+  return encodeURI(csv);
+}
+
 function loading(toggle){
   if (toggle) {
     superdivs['render'].style('display','none');
@@ -150,6 +171,8 @@ function render(repairsjson){
   // filter repairs
   filtered = filter_repairs(repairsjson);
   d3.select('#num-matches').html(filtered.length)
+  // download button
+  d3.select('#download').attr('download','repairs.csv',).attr('href',gen_download(filtered))
   // table
   tcols = meta['table'].filter((t)=>{return t.checked;})
   rcols = get_cols(get_col('col',tcols),filtered)

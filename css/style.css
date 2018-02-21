@@ -164,5 +164,5 @@ tr:nth-child(even) {
   background-color: var(--color-dark-1);
 }
 #download:hover {
-  background-color: var(--color-dark-2);
+  background-color: var(--color-link);
 }
