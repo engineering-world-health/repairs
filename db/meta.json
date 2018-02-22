@@ -125,10 +125,6 @@
       "col":"country",
       "checked":false
     },{
-      "name":"Hospital",
-      "col":"hospital",
-      "checked":false
-    },{
       "name":"Equipment Type",
       "col":"equipment",
       "checked":true
