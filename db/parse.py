@@ -69,13 +69,13 @@ class MySQLDatabase:
 
   def create(self):
     if verbose:
-      print '> CREATING DATABASE: {}'.format(self.name)
+      print('> CREATING DATABASE: {}'.format(self.name))
     self.csr.execute('CREATE DATABASE IF NOT EXISTS {}'.format(self.name))
     self.csr.execute('USE {}'.format(self.name))
 
   def delete(self):
     if verbose:
-      print '> DELETING DATABASE: {}'.format(self.name)
+      print('> DELETING DATABASE: {}'.format(self.name))
     self.csr.execute('DROP DATABASE IF EXISTS {}'.format(self.name))
 
 class MySQLTable:
@@ -93,7 +93,7 @@ class MySQLTable:
 
   def create(self):
     if verbose:
-      print '> CREATING TABLE: {}'.format(self.name)
+      print('> CREATING TABLE: {}'.format(self.name))
     self.csr.execute('CREATE TABLE IF NOT EXISTS `{}` (\n{},\n{},\n{}\n)'.format(\
       self.name,\
       '`id` INT(11) NOT NULL AUTO_INCREMENT',\
@@ -102,7 +102,7 @@ class MySQLTable:
 
   def delete(self):
     if verbose:
-      print '> DELETING TABLE: {}'.format(self.name)
+      print('> DELETING TABLE: {}'.format(self.name))
     self.csr.execute('DROP TABLE IF EXISTS {}'.format(self.name))
 
   def add_row(self,rowDict,commit=True):
@@ -150,14 +150,14 @@ class CSVTable:
 
   def create(self):
     if verbose:
-      print '> CREATING TABLE: {}'.format(self.name)
+      print('> CREATING TABLE: {}'.format(self.name))
     with open(self.name,'a+') as csvfile:
       if sum(1 for row in csv.reader(csvfile)) == 0:
         csv.writer(csvfile).writerow(self.header)
 
   def delete(self):
     if verbose:
-      print '> DELETING TABLE: {}'.format(self.name)
+      print('> DELETING TABLE: {}'.format(self.name))
     os.remove(self.name)
 
   def add_row(self,rowDict,commit=None):
@@ -192,7 +192,7 @@ class WorkSummaryForm(ExcelFile):
   def __init__(self,filename):
     ExcelFile.__init__(self,filename,idx['sheet'])
     if verbose:
-      print '> LOADING REPAIRS IN: {}'.format(filename)
+      print('> LOADING REPAIRS IN: {}'.format(filename))
     self.filename = filename
     self.lut      = self.load_luts()
     self.meta     = self.load_meta()
@@ -234,7 +234,7 @@ class WorkSummaryForm(ExcelFile):
           ('notes'    , string(get(row,self.col(idx['repair']['notes'])))),
         ])
         if verbose:
-          print '  > LOADED: {}'.format(repair_str(repair))
+          print('  > LOADED: {}'.format(repair_str(repair)))
         repairs.append(repair)
     return repairs
 
@@ -268,28 +268,28 @@ def repair_str(repair):
 def parse_all_work_summary_forms(D,T):
   repairs = []
   if verbose:
-    print 'LOADING WORK SUMMARY FORMS'
+    print('LOADING WORK SUMMARY FORMS')
   for (paths,dirs,files) in os.walk(D):
     for f in files:
       form = WorkSummaryForm(os.path.join(paths,f))
       repairs += form.repairs
   if verbose:
-    print '> UPDATING DATABASE: {}'.format(T.name)
+    print('> UPDATING DATABASE: {}'.format(T.name))
   T.add_rows(repairs,commit=True)
   for repair in repairs:
     #T.add_row(repair,commit=False)
     if verbose:
-      print '  > ADDED: {}'.format(repair_str(repair))
+      print('  > ADDED: {}'.format(repair_str(repair)))
   T.commit()
 
 def load_all_repairs(T):
   if verbose:
-    print '> LOADING REPAIRS IN: {}'.format(T.name)
+    print('> LOADING REPAIRS IN: {}'.format(T.name))
   repairs = []
   header = T.get_header()
   for row in T.get_rows():
     repairs.append(odict([(key,str(value)) for key,value in zip(header,row)]))
-    print '  > LOADED: {}'.format(repair_str(repair))
+    print('  > LOADED: {}'.format(repair_str(repair)))
   return repairs
 
 def init_table(args):
@@ -301,7 +301,7 @@ def init_table(args):
       T  = CSVTable(csvname, sql['schema'].keys())
     return T
   if verbose:
-    print 'INITIALIZING DATABASE'
+    print('INITIALIZING DATABASE')
   T = init(args['c'])
   if not args['a']:
     T.delete()
@@ -352,4 +352,4 @@ if __name__ == '__main__':
 
   # count repair logs in the table
   if args['n']:
-    print '# Repairs: '+str(T.count_rows())
+    print('# Repairs: '+str(T.count_rows()))
