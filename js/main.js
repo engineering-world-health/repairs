@@ -16,6 +16,7 @@ function gen_checkbox(parent,data){
 }
 
 function gen_piechart(parent,names,values){
+  var total = values.reduce((t,i)=>t+i);
   parent.style('height','100%').style('max-width','300px').style('margin','0 auto');
   var r = 100;
   var svg  = parent.append('svg').attr('width','100%')
@@ -28,6 +29,12 @@ function gen_piechart(parent,names,values){
     .append('g').attr('class','arc');
   arc.append('path')
     .attr('d',path).attr('fill',function(d,i){return meta['colors'][i];})
+  var tip = arc.append('text').data(values)
+    .style('text-anchor','middle').attr('transform','translate(0,-6)')
+    .text(function(v){return v;})
+  var tip = arc.append('text').data(values)
+      .style('text-anchor','middle').attr('transform','translate(0,+6)')
+      .text(function(v){return '('+Math.round(v/total*100)+'%)';})
   var leg  = parent.append('div');
   var keys = leg.selectAll('legi').data(names).enter()
     .append('legi')

@@ -50,6 +50,14 @@ option {
   background-color: var(--color-pane);
   color: var(--color-text);
 }
+.arc text {
+  font-size: 7pt;
+  fill: #333;
+  visibility: hidden;
+}
+.arc:hover text {
+  visibility: visible;
+}
 legi {
   padding: 0 0 0 1em;
   margin: 2px;
