@@ -46,6 +46,9 @@ select {
   height: 34px;
   width: 100%;
 }
+select:hover {
+  cursor: pointer;
+}
 option {
   background-color: var(--color-pane);
   color: var(--color-text);
@@ -152,16 +155,16 @@ tr:nth-child(even) {
 [type="checkbox"]:checked + label:before {
   content: '';
   position: absolute;
-  left: 0;       top: 0;
-  width: 1.5em;  height: 1.5em;
+  left: 0;     top: 0;
+  width: 1em;  height: 1em;
   background-color: var(--color-dark-1);
 }
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after {
   content: '';
   position: absolute;
-  left: .25em;  top: .25em;
-  width: 1em;   height: 1em;
+  left: .2em;  top: .2em;
+  width: .6em;  height: .6em;
   background-color: var(--color-light-1);
 }
 [type="checkbox"]:not(:checked) + label:after {
