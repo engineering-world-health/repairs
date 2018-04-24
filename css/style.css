@@ -53,12 +53,14 @@ option {
   background-color: var(--color-pane);
   color: var(--color-text);
 }
-.arc text {
+.arc text,
+.bar text {
   font-size: 7pt;
   fill: #333;
   visibility: hidden;
 }
-.arc:hover text {
+.arc:hover text,
+.bar:hover text {
   visibility: visible;
 }
 legi {

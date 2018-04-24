@@ -57,10 +57,17 @@ function gen_barchart(parent,names,values){
   var grid = svg.append('g').attr('class','grid')
     .call(d3.axisBottom(x).tickSize(-ht-gy))
     .attr('transform','translate('+ox+','+(ht-2*dy+gy)+')');
-  var bars = svg.append('g').selectAll('.bar').data(values.reverse()).enter()//
-  bars.append('rect').attr('class','bar').style('fill',meta['colors'][0])
+  var bars = svg.append('g').selectAll('.bar').data(values.reverse()).enter()
+  var bar  = bars.append('g').attr('class','bar')
+  bar.append('rect').style('fill',meta['colors'][0])
     .attr('y',function(d,i){return y(barnames[i]);}).attr('x',ox)
     .attr('height',dy).attr('width',function(d){return x(d);})
+  bar.append('text')
+    .style('text-anchor','start')
+    .attr('y',function(d,i){return y(barnames[i]);}).attr('x',ox)
+    .attr('x',function(d){return x(d)+5;})
+    .text(function(v){return v;})
+    .attr('transform','translate('+ox+','+dy+')');
   var labs = svg.append('g').call(d3.axisLeft().scale(y))
     .attr('transform','translate('+ox+','+dy/2+')');
 }
