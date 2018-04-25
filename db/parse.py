@@ -200,8 +200,8 @@ class WorkSummaryForm(ExcelFile):
 
   def load_luts(self):
     return {
-      'result' : lut['result'],
-      'fix'    : lut['fix']
+      'result' : lut['pies']['result'],
+      'fix'    : lut['pies']['fix']
     }
 
   def load_meta(self):
