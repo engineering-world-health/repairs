@@ -7,6 +7,11 @@
       "2014",
       "2015"
     ],
+    "country": [
+      "Nicaragua",
+      "Rwanda",
+      "Tanzania"
+    ],
     "equipment": [
       "Air Compressor",
       "Air Conditioner",
@@ -118,6 +123,10 @@
     {
       "name":"Year",
       "col":"year",
+      "checked":false
+    },{
+      "name":"Country",
+      "col":"country",
       "checked":false
     },{
       "name":"Equipment Type",

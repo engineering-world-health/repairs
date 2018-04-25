@@ -32,19 +32,8 @@
     </div>
     <div class='row' style='display:block'>
       <div class='pane col-12'>
-        <div class='row' id='filters'>
-          <div class='col-xs-6 col-sm-4 col-md-3 col-lg-3'>
-            <h4>Year</h4>
-            <select class=dropdown id='select-year'></select>
-          </div>
-          <div class='col-xs-6 col-sm-4 col-md-3 col-lg-3'>
-            <h4>Country</h4>
-            <select class=dropdown id='select-country'></select>
-          </div>
-          <div class='col-xs-6 col-sm-4 col-md-3 col-lg-3'>
-            <h4>Equipment Type</h4>
-            <select class=dropdown id='select-equipment'></select>
-          </div>
+        <div class='row'>
+          <div id='filters'></div>
           <div class='col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Matching Repairs:</h4>
             <span id='num-matches'>0</span><!--

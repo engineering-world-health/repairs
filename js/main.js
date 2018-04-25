@@ -1,12 +1,19 @@
-
-function gen_dropdown(select,id,list){
-  droplist = Array.from(Object.create(list))
+function titlecase(string){
+  return string.toLowerCase().replace(/[^\s_\-/]*/g,
+    w => w.replace(/./,
+      c => c.toUpperCase()
+    )
+  )
+}
+function gen_dropdown(parent,name,list){
+  var div    = parent.append('div').attr('class','col-xs-6 col-sm-4 col-md-3 col-lg-3');
+  var title  = div.append('h4').html(titlecase(name));
+  var select = div.append('select').attr('class','dropdown').attr('id','select-'+name)
+  var droplist = Array.from(Object.create(list))
   droplist.unshift(all)
   var options = select.selectAll('option').data(droplist).enter()
     .append('option').text(function(d){return d;});
-  return select;
 }
-
 function gen_checkbox(parent,data){
   var wrap = parent.append('div').attr('float','left')
     .attr('class','col-xs-6 col-sm-3 col-md-2');
@@ -14,7 +21,6 @@ function gen_checkbox(parent,data){
     .attr('id','checkbox-'+data['col']).property('checked',Boolean(data['checked']));
   wrap.append('label').attr('for','checkbox-'+data['col']).html(data['name']);
 }
-
 function gen_piechart(parent,names,values){
   var total = values.reduce((t,i)=>t+i);
   parent.style('height','100%').style('max-width','300px').style('margin','0 auto');
@@ -41,7 +47,6 @@ function gen_piechart(parent,names,values){
     .style('background',function(d,i){return meta['colors'][i]})
     .append('legl').text(function(d){return d;})
 }
-
 function gen_barchart(parent,names,values){
   dy = 10;
   gy = 2;
@@ -71,7 +76,6 @@ function gen_barchart(parent,names,values){
   var labs = svg.append('g').call(d3.axisLeft().scale(y))
     .attr('transform','translate('+ox+','+dy/2+')');
 }
-
 function gen_table(parent,cols,data){
   parent.style('height','100%').style('display','table')
   var table = parent.append('table').attr('class','tablesorter');
@@ -84,54 +88,44 @@ function gen_table(parent,cols,data){
     .append('td').text(function(d) {return d;});
   $(document).ready(function(){$(".tablesorter").tablesorter()});
 }
-
 function get_checkboxes(){
   for (t in meta['table']){
     meta['table'][t]['checked'] = d3.select('#checkbox-'+meta['table'][t]['col'])
     .property('checked');
   }
 }
-
 function get_cols(cols,data){
   coldata = []
   for (d in data){coldata.push(cols.reduce((o,k)=>{o[k]=data[d][k];return o;},{}));}
   return coldata;
 }
-
 function get_col(col,data){
   coldata = []
   for (d in data){coldata.push(data[d][col]);}
   return coldata;
 }
-
 function count_match(labels,data){
   counts = [...Array(labels.length)]
   for (l in labels){ counts[l] = data.filter(d => d === labels[l]).length }
   return counts
 }
-
 function filter_repairs(repairs){
-  year      = select['year'].node().value
-  country   = select['country'].node().value
-  equipment = select['equipment'].node().value
-  var filtered = repairs.filter(function(r){
-    return Boolean(
-    (year      == all || year      == r.year) &&
-    (country   == all || country   == r.country) &&
-    (equipment == all || equipment == r.equipment));
-  });
-  return filtered;
+  keys   = Object.keys(meta['dropdowns'])
+  values = {}
+  for (key in meta['dropdowns']) {
+    values[key] = d3.select('#select-'+key).node().value;
+  };
+  return repairs.filter(r => keys.map(
+    k => values[k] == all || values[k] == r[k]).every(Boolean)
+  );
 }
-
 function gen_csv_line(list){
   let delim = ","
   let wrap  = "\""
   let eol   = "\r\n"
   return wrap+list.join(wrap+delim+wrap)+wrap+eol
 }
-
 function gen_download(repairs){
-
   let csv = "data:text/csv;charset=utf-8,";
   csv += gen_csv_line(Object.keys(repairs[0]))
   repairs.forEach(function(r){
@@ -139,7 +133,6 @@ function gen_download(repairs){
   });
   return encodeURI(csv);
 }
-
 function loading(toggle){
   if (toggle) {
     superdivs['render'].style('display','none');
@@ -153,27 +146,23 @@ function loading(toggle){
     superdivs['spinner']['spinner'].stop()
   }
 }
-
 function gen_dropdowns(){
-  keys =  ['year','country','equipment']
+  keys = Object.keys(meta['dropdowns'])
   for (k in keys){
-    gen_dropdown(select[keys[k]],'select-'+keys[k],meta[keys[k]])
+    gen_dropdown(d3.select('#filters'),keys[k],meta['dropdowns'][keys[k]])
   }
 }
-
 function gen_checkboxes(){
   for (c in meta['table']){
     gen_checkbox(d3.select('#checkbox-table'),meta['table'][c])
   }
 }
-
 function init(metajson){
   meta = metajson;
   loading(true)
   gen_dropdowns();
   gen_checkboxes();
 }
-
 function render(repairsjson){
   // init
   loading(false)
@@ -189,17 +178,19 @@ function render(repairsjson){
   rcols = get_cols(get_col('col',tcols),filtered)
   gen_table(div['table'],tcols,rcols)
   // bar chart
-  if (select['equipment'].node().value == all) {
+  if (d3.select('#select-equipment').node().value == all) {
     div['equipment'].style('display','block')
-    gen_barchart(div['equipment'],meta['equipment'],count_match(meta['equipment'],filtered.map(f => f.equipment)));
+    gen_barchart(div['equipment'],meta['dropdowns']['equipment'],
+      count_match(meta['dropdowns']['equipment'],filtered.map(f => f.equipment)));
   } else {
     div['equipment'].style('display','none');
   }
   // pie charts
-  gen_piechart(div['result'],meta['result'],count_match(meta['result'],get_col('result',filtered)))
-  gen_piechart(div['fix'],   meta['fix'],   count_match(meta['fix'],   get_col('fix',filtered)))
+  gen_piechart(div['result'],meta['pies']['result'],
+    count_match(meta['pies']['result'],get_col('result',filtered)))
+  gen_piechart(div['fix'],meta['pies']['fix'],
+    count_match(meta['pies']['fix'],get_col('fix',filtered)))
 }
-
 // -----------------------------------------------------------------------------
 // MAIN
 // -----------------------------------------------------------------------------
@@ -209,11 +200,6 @@ var div = {
   equipment: d3.select('#repair-equipment'),
   fix:       d3.select('#repair-fix')
 };
-var select = {
-  year:      d3.select('#select-year'),
-  country:   d3.select('#select-country'),
-  equipment: d3.select('#select-equipment'),
-}
 var superdivs = {
   loading: d3.select('#loading'),
   spinner: d3.select('#spinner'),
@@ -222,8 +208,7 @@ var superdivs = {
 var all = 'All';
 var meta;
 var repairs;
-
-d3.json('db/meta.json',init);
+d3.json('db/meta-admin.json',init);
 d3.json('db/cnx.php',function(e,repairs){
   render(repairs);
   window.addEventListener('resize',      function(){render(repairs);});
