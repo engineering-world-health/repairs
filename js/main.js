@@ -208,7 +208,7 @@ var superdivs = {
 var all = 'All';
 var meta;
 var repairs;
-d3.json('db/meta-admin.json',init);
+d3.json('db/meta.json',init);
 d3.json('db/cnx.php',function(e,repairs){
   render(repairs);
   window.addEventListener('resize',      function(){render(repairs);});
