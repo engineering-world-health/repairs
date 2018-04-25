@@ -303,7 +303,7 @@ def init_table(args):
   if verbose:
     print('INITIALIZING DATABASE')
   T = init(args['c'])
-  if not args['a']:
+  if args['o']:
     T.delete()
     T = init(args['c'])
   return T
@@ -321,9 +321,9 @@ def get_cli():
     Name of a local CSV file for storing the repair logs
     instead of the SQL database
       Optional - default is: none''')
-  cli.add_argument('-a', action='store_true', help='''\
-    Flag: Append repair logs to the existing SQL database
-      Optional - default is: overwrite the database''')
+  cli.add_argument('-o', action='store_true', help='''\
+    Flag: Overwrite the existing SQL repair logs database
+      Optional - default is: append repair logs to the database''')
   cli.add_argument('-x', action='store_true', help='''\
     Flag: Do not add any repair logs to the database
       Optional - default is: add from all Work Summary Forms''')
