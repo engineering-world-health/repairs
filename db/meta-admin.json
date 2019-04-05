@@ -1,0 +1,153 @@
+{
+  "dropdowns": {
+    "year": [
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015"
+    ],
+    "country": [
+      "Nicaragua",
+      "Rwanda",
+      "Tanzania"
+    ],
+    "equipment": [
+      "Air Compressor",
+      "Air Conditioner",
+      "Anesthesia Machine",
+      "Aspirator/Suction Machine",
+      "Autoclave (lab, surgery, and other)",
+      "Automatic Voltage Regulator",
+      "Bed, delivery",
+      "Blood Bank Refrigerator",
+      "Blood clotting time meter",
+      "Blood electrolyte analyzer",
+      "Blood Gas Analyzer",
+      "Blood Pressure Device, Automatic (NIBP)",
+      "Blood Pressure Device, Manual (Sphygmomanometer) (Fixed or portable)",
+      "Bottle Washing Machine",
+      "Breast Pump",
+      "Capnograph",
+      "Ceiling Fan",
+      "Centrifuge",
+      "Centrifuge (electric or hand operated)",
+      "Change Over Switch",
+      "Computer",
+      "Control Switch Panel",
+      "Defibrillator (automatic and manual)",
+      "Dental Drilling Machine",
+      "Dialysis Equipment",
+      "Distiller",
+      "Drying Machine",
+      "ECG Machine",
+      "Electrosurgery Unit (ESU)",
+      "Fetal steth (fetoscope or  Doppler)",
+      "Fluoroscopy (x-ray moving images)",
+      "Furniture (chairs, tables, and beds)",
+      "Generator",
+      "Glucose level kit (or glucometer)",
+      "Heart Lung Machine",
+      "Hot Plate (laboratory, but not kitchen)",
+      "Incubator (infant)",
+      "Infant Warmer (radiant or other)",
+      "Infusion pumps",
+      "Iron (for clothing)",
+      "Lamp, examination",
+      "Lamp, surgical",
+      "Laryngoscope",
+      "Microscope",
+      "Nebulizer",
+      "Operating Table",
+      "Ophthalmoscope (eye examination instrument)",
+      "Otoscopes",
+      "Oven (laboratory, not kitchen)",
+      "Oxygen Concentrator",
+      "Pacemaker (ext, temp and permanent)",
+      "Patient Monitor",
+      "Photocopier",
+      "Phototherapy device",
+      "Printer",
+      "Projector",
+      "Pulse Oximeter",
+      "Respiration monitor (apnea monitor)",
+      "Scales (laboratory and in wards)",
+      "Shaker Machine (laboratory)",
+      "Skin Grafting Machine (dermatome)",
+      "Spectrophotometer/Colorimeter",
+      "Stethoscopes",
+      "Telephone",
+      "Television",
+      "Thermometers",
+      "Transformer",
+      "Ultrasound Machine (imaging)",
+      "UPS (battery backup for computer)",
+      "Vaccine Refrigerator",
+      "Vacuum Extractor (for delivery)",
+      "Ventilator",
+      "Washing Machine",
+      "Water Bath (laboratory)",
+      "Water Pump (for drinking water)",
+      "Water Purifier (for lab, in wards)",
+      "X-Ray Film Dryer",
+      "X-Ray Film View Box",
+      "X-Ray Machine",
+      "Other"
+    ]
+  },
+  "pies": {
+    "result": [
+      "Repaired",
+      "Abandoned"
+    ],
+    "fix": [
+      "Plumbing",
+      "Motor",
+      "Electric Simple",
+      "Mechanical Simple",
+      "Power Supply",
+      "Installation/Training",
+      "Other"
+    ]
+  },
+  "colors": [
+    "#0071b2",
+    "#00bbd9",
+    "#92fda2",
+    "#fff200",
+    "#fea500",
+    "#f7000d",
+    "#810072"
+  ],
+  "table" : [
+    {
+      "name":"Year",
+      "col":"year",
+      "checked":false
+    },{
+      "name":"Country",
+      "col":"country",
+      "checked":false
+    },{
+      "name":"Equipment Type",
+      "col":"equipment",
+      "checked":true
+    },{
+      "name":"Manufacturer",
+      "col":"oem",
+      "checked":false
+    },{
+      "name":"Model",
+      "col":"model",
+      "checked":true
+    },{
+      "name":"Serial Number",
+      "col":"sn",
+      "checked":false
+    },{
+      "name":"Notes",
+      "col":"notes",
+      "checked":true
+    }
+  ]
+}
