@@ -142,11 +142,6 @@ tr:nth-child(even) {
 .col-12 {
   width: 100%;
 }
-.checkbox {
-  display: inline-block;
-  padding: 5px;
-  padding-right: 10px;
-}
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
