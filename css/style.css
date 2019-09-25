@@ -142,6 +142,11 @@ tr:nth-child(even) {
 .col-12 {
   width: 100%;
 }
+.checkbox {
+  display: inline-block;
+  padding: 5px;
+  padding-right: 10px;
+}
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
@@ -150,7 +155,7 @@ tr:nth-child(even) {
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label {
   position: relative;
-  padding-left: 2em;
+  padding-left: 1.5em;
   cursor: pointer;
 }
 [type="checkbox"]:not(:checked) + label:before,

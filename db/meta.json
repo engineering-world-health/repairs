@@ -7,6 +7,11 @@
       "2014",
       "2015"
     ],
+    "country": [
+      "Nicaragua",
+      "Rwanda",
+      "Tanzania"
+    ],
     "equipment": [
       "Air Compressor",
       "Air Conditioner",
@@ -114,10 +119,27 @@
     "#f7000d",
     "#810072"
   ],
+  "cols": [
+    "year",
+    "country",
+    "hospital",
+    "engineers",
+    "equipment",
+    "oem",
+    "model",
+    "sn",
+    "fix",
+    "result",
+    "notes"
+  ],
   "table" : [
     {
       "name":"Year",
       "col":"year",
+      "checked":false
+    },{
+      "name":"Country",
+      "col":"country",
       "checked":false
     },{
       "name":"Equipment Type",

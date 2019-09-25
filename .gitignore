@@ -2,3 +2,5 @@ database.csv
 ignore/*
 data/*
 deploy/*
+.atom-build.yml
+.tags

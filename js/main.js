@@ -16,7 +16,7 @@ function gen_dropdown(parent,name,list){
 }
 function gen_checkbox(parent,data){
   var wrap = parent.append('div').attr('float','left')
-    .attr('class','col-xs-6 col-sm-3 col-md-2');
+    .attr('class','checkbox');
   wrap.append('input').attr('type','checkbox').attr('class','checkbox')
     .attr('id','checkbox-'+data['col']).property('checked',Boolean(data['checked']));
   wrap.append('label').attr('for','checkbox-'+data['col']).html(data['name']);
