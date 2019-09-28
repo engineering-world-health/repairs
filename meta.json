@@ -1,18 +1,18 @@
 {
-  "dropdowns": {
-    "year": [
-      "2011",
-      "2012",
-      "2013",
-      "2014",
-      "2015"
-    ],
-    "country": [
-      "Nicaragua",
-      "Rwanda",
-      "Tanzania"
-    ],
-    "equipment": [
+  "Year": {},
+  "Country": {
+    "col": "C",
+    "row": "7"
+  },
+  "Hospital": {
+    "col": "K",
+    "row": "7"
+  },  
+  "Equipment Type": {
+    "col": "B",
+    "row-1": "11",
+    "required": true,
+    "values": [
       "Air Compressor",
       "Air Conditioner",
       "Anesthesia Machine",
@@ -95,12 +95,23 @@
       "Other"
     ]
   },
-  "pies": {
-    "result": [
-      "Repaired",
-      "Abandoned"
-    ],
-    "fix": [
+  "Manufacturer": {
+    "col": "C",
+    "row-1": "11",
+    "required": true
+  },
+  "Model": {
+    "col": "D",
+    "row-1": "11"
+  },
+  "Serial Number": {
+    "col": "E",
+    "row-1": "11"
+  },
+  "Fix Type": {
+    "col": "FGHIJKL",
+    "row-1": "11",
+    "values": [
       "Plumbing",
       "Motor",
       "Electric Simple",
@@ -110,57 +121,16 @@
       "Other"
     ]
   },
-  "colors": [
-    "#0071b2",
-    "#00bbd9",
-    "#92fda2",
-    "#fff200",
-    "#fea500",
-    "#f7000d",
-    "#810072"
-  ],
-  "cols": [
-    "year",
-    "country",
-    "hospital",
-    "engineers",
-    "equipment",
-    "oem",
-    "model",
-    "sn",
-    "fix",
-    "result",
-    "notes"
-  ],
-  "table" : [
-    {
-      "name":"Year",
-      "col":"year",
-      "checked":false
-    },{
-      "name":"Country",
-      "col":"country",
-      "checked":false
-    },{
-      "name":"Equipment Type",
-      "col":"equipment",
-      "checked":true
-    },{
-      "name":"Manufacturer",
-      "col":"oem",
-      "checked":false
-    },{
-      "name":"Model",
-      "col":"model",
-      "checked":true
-    },{
-      "name":"Serial Number",
-      "col":"sn",
-      "checked":false
-    },{
-      "name":"Notes",
-      "col":"notes",
-      "checked":true
-    }
-  ]
+  "Repair Result": {
+    "col": "NO",
+    "row-1": "11",
+    "values": [
+      "Repaired",
+      "Abandoned"
+    ]
+  },
+  "Notes": {
+    "col": "M",
+    "row-1": "11"
+  }
 }

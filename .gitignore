@@ -1,6 +1,4 @@
-database.csv
-ignore/*
-data/*
-deploy/*
+raw/*
 .atom-build.yml
 .tags
+repairs.csv
