@@ -174,9 +174,9 @@ function render(repairsjson){
   // download button
   d3.select('#download').attr('download','ewh-repairs.csv',).attr('href',gen_download(filtered))
   // table
-  // tcols = meta['table'].filter((t)=>{return t.checked;})
-  // rcols = get_cols(get_col('col',tcols),filtered)
-  // gen_table(div['table'],tcols,rcols)
+  tcols = meta['table'].filter((t)=>{return t.checked;})
+  rcols = get_cols(get_col('col',tcols),filtered)
+  gen_table(div['table'],tcols,rcols)
   // bar chart
   if (d3.select('#select-equipment').node().value == all) {
     div['equipment'].style('display','block')
