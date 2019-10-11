@@ -23,7 +23,8 @@
       "Nepal",
       "Nicaragua",
       "Rwanda",
-      "Tanzania"
+      "Tanzania",
+      "Uganda"
     ],
     "equipment": [
       "Air Compressor",
@@ -106,6 +107,10 @@
       "X-Ray Film View Box",
       "X-Ray Machine",
       "Other"
+    ],
+    "result": [
+      "Repaired",
+      "Abandoned"
     ]
   },
   "pies": {
@@ -157,7 +162,7 @@
     },{
       "name":"Equipment Type",
       "col":"equipment",
-      "checked":true
+      "checked":false
     },{
       "name":"Manufacturer",
       "col":"oem",
@@ -165,7 +170,7 @@
     },{
       "name":"Model",
       "col":"model",
-      "checked":true
+      "checked":false
     },{
       "name":"Serial Number",
       "col":"sn",
@@ -173,7 +178,7 @@
     },{
       "name":"Notes",
       "col":"notes",
-      "checked":true
+      "checked":false
     }
   ]
 }

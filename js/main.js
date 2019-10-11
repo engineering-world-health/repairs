@@ -125,14 +125,14 @@ function gen_csv_line(list){
   let eol   = "\r\n"
   return wrap+list.join(wrap+delim+wrap)+wrap+eol
 }
-function gen_download(repairs){
-  let csv = "data:text/csv;charset=utf-8,";
-  csv += gen_csv_line(Object.keys(repairs[0]))
-  repairs.forEach(function(r){
-    csv += gen_csv_line(Object.values(r))
-  });
-  return encodeURI(csv);
-}
+// function gen_download(repairs){
+//   let csv = "data:text/csv;charset=utf-8,";
+//   csv += gen_csv_line(Object.keys(repairs[0]))
+//   repairs.forEach(function(r){
+//     csv += gen_csv_line(Object.values(r))
+//   });
+//   return encodeURI(csv);
+// }
 function loading(toggle){
   if (toggle) {
     superdivs['render'].style('display','none');
@@ -171,8 +171,8 @@ function render(repairsjson){
   // filter repairs
   filtered = filter_repairs(repairsjson);
   d3.select('#num-matches').html(filtered.length)
-  // download button
-  d3.select('#download').attr('download','ewh-repairs.csv',).attr('href',gen_download(filtered))
+  // // download button
+  // d3.select('#download').attr('download','ewh-repairs.csv',).attr('href',gen_download(filtered))
   // table
   tcols = meta['table'].filter((t)=>{return t.checked;})
   rcols = get_cols(get_col('col',tcols),filtered)

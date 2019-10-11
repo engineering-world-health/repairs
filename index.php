@@ -37,7 +37,7 @@
           <div class='col-xs-6 col-sm-4 col-md-3 col-lg-3'>
             <h4>Matching Repairs:</h4>
             <span id='num-matches'>0</span><!--
-         --><a id='download'>Download CSV</a>
+         --><a id='download'>Download [not working]</a>
           </div>
         </div>
       </div>
